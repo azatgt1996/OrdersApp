@@ -1,7 +1,53 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('./assets/fonts/Inter-V.ttf');
+}
+
 * {
-  font-family: sans-serif;
+  font-family: 'Inter';
 }
 
 body {
   background-color: #f8f7fa;
+  padding-inline: 180px;
+}
+
+header {
+  height: 52px;
+  line-height: 52px;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #16181e;
+}
+
+section {
+  background: white;
+  border-radius: 12px;
+  padding: 24px 20px;
+}
+
+.v-btn {
+  height: 60px !important;
+  border-radius: 12px !important;
+  background-color: #f6f6f6 !important;
+  color: #16181e !important;
+  text-transform: none !important;
+}
+.v-btn.bg-primary {
+  background-color: #1928f0 !important;
+}
+.v-field {
+  border-radius: 12px !important;
+}
+.v-select .v-icon::before {
+  background: url(./assets/icons/arrow.svg);
+  content: '';
+  width: 18px;
+  height: 18px;
+}
+.v-field--variant-outlined.v-field--focused .v-field__outline {
+  --v-field-border-width: 1px !important;
+  color: #1928f0;
 }
