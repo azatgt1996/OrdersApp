@@ -1,34 +1,49 @@
 <template>
   <header>Разместить заказа</header>
-  <section class="order-editor">
+  <v-form class="main-form" @submit.prevent="saveOrder">
     <div class="flex-box">
-      <v-text-field label="Название заказа*" variant="outlined" />
-      <v-text-field label="Вес" variant="outlined" type="number" />
+      <v-text-field v-model="order.name" label="Название заказа*" variant="outlined" :rules="[requiredValidator, orderNameValidator]" />
+      <v-text-field v-model="order.weight" label="Вес" variant="outlined" type="number" :rules="[orderWeightValidator]" />
     </div>
     <div class="flex-box">
-      <v-text-field label="Город*" variant="outlined" />
-      <v-text-field label="Дедлайн*" variant="outlined">
+      <v-text-field v-model="order.city" label="Город*" variant="outlined" :rules="[requiredValidator]" />
+      <v-text-field v-model="order.deadline" label="Дедлайн*" variant="outlined" :rules="[requiredValidator, dateValidator]">
         <template #append-inner>
           <div v-html="calendarIcon" />
         </template>
       </v-text-field>
     </div>
-    <v-select label="Вид оплаты" :items="['Наличные', 'Банковская карта']" variant="outlined" />
-    <v-checkbox class="prepayment" label="Аванс" />
-    <v-select label="Особенности" :items="['Дизайн', 'B2B', 'Test', 'Demo']" multiple variant="outlined" />
-    <v-textarea label="Описание заказа" v-model="text" variant="outlined" persistent-hint :hint="`${text.length} / 500`" />
+    <v-select v-model="order.paymentMethod" label="Вид оплаты" :items="paymentMethodList" variant="outlined" />
+    <v-checkbox v-model="order.prepayment" class="prepayment" label="Аванс" />
+    <v-select v-model="order.peculiarities" label="Особенности" :items="peculiarityList" multiple variant="outlined" />
+    <v-textarea
+      label="Описание заказа"
+      v-model="order.description"
+      variant="outlined"
+      persistent-hint
+      :hint="`${order.description.length} / 500`"
+    />
     <div class="button-box">
       <v-btn variant="flat"> Отменить </v-btn>
-      <v-btn variant="flat" color="primary"> Сохранить </v-btn>
+      <v-btn variant="flat" color="primary" type="submit"> Сохранить </v-btn>
     </div>
-  </section>
+  </v-form>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import calendarIcon from '@/assets/icons/calendar.svg?raw'
+import { paymentMethodList, peculiarityList } from '@/constants/lists'
+import { dateValidator, orderNameValidator, orderWeightValidator, requiredValidator } from '@/constants/validators'
+import { useOrderStore } from '@/stores/order'
+import { storeToRefs } from 'pinia'
 
-const text = ref('')
+const orderStore = useOrderStore()
+const { order } = storeToRefs(orderStore)
+
+async function saveOrder(event: any) {
+  const results = await event
+  console.log(results)
+}
 </script>
 
 <style scoped>

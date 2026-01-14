@@ -35,7 +35,7 @@ import personIcon from '@/assets/icons/person.svg?raw'
 }
 .person-fullname {
   font-size: 14px;
-  color: #2f333f;
+  color: var(--text-color);
   font-weight: 500;
 }
 .person-position {

@@ -1,11 +1,10 @@
 <template>
   <header>Просмотр заказа</header>
-  <section class="order-viewer">
-    <div class="order-name">Полное название заказа</div>
+  <section class="main-form">
+    <div class="order-name">{{ order.name }}</div>
     <div class="order-tags">
-      <div class="tag prepayment">Аванс</div>
-      <div class="tag">Дизайн</div>
-      <div class="tag">B2B</div>
+      <div v-if="order.prepayment" class="tag prepayment">Аванс</div>
+      <div v-for="(el, index) in order.peculiarities" :key="index" class="tag">{{ el }}</div>
     </div>
     <div class="order-info">
       <div class="info-item" v-for="(item, index) in orderInfo" :key="index">
@@ -16,9 +15,7 @@
     <div class="order-description">
       <div class="label">Описание заказа</div>
       <div class="text">
-        Необходимо создать фирменный стиль компании — полностью новый или на основе существующих наработок, логотипа, цветовых предпочтений
-        или корпоративных материалов. Стиль должен отражать позиционирование бренда и включать все необходимые элементы: логотип, цветовую
-        палитру, типографику, паттерны и макеты основных носителей с учётом специфики отрасли.
+        {{ order.description }}
       </div>
     </div>
     <div class="button-box">
@@ -28,18 +25,27 @@
 </template>
 
 <script setup lang="ts">
-const orderInfo = [
-  { label: 'Дедлайн', value: '04.06.2025' },
-  { label: 'Город', value: 'Москва' },
-  { label: 'Вид оплаты', value: 'Наличные' },
-  { label: 'Вес', value: '200 кг' },
-]
+import { useOrderStore } from '@/stores/order'
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
+
+const orderStore = useOrderStore()
+const { order } = storeToRefs(orderStore)
+
+const orderInfo = computed(() => {
+  return [
+    { label: 'Дедлайн', value: order.value.deadline },
+    { label: 'Город', value: order.value.city },
+    { label: 'Вид оплаты', value: order.value.paymentMethod },
+    { label: 'Вес', value: `${order.value.weight} кг` },
+  ]
+})
 </script>
 
 <style scoped>
 .order-name {
   font-size: 20px;
-  color: #16181e;
+  color: var(--dark-text-color);
   line-height: 28px;
   text-align: center;
   font-weight: 600;
@@ -52,6 +58,7 @@ const orderInfo = [
 }
 .tag {
   background-color: #e1e4ee;
+  color: var(--text-color);
   border-radius: 40px;
   line-height: 40px;
   padding-inline: 14px;
@@ -70,15 +77,24 @@ const orderInfo = [
   flex-direction: column;
   justify-content: space-around;
 }
+.info-item .label {
+  color: var(--light-text-color);
+}
 .info-item .value {
   font-weight: 600;
+  color: var(--text-color);
 }
 
 .order-description {
   margin-top: 8px;
 }
+.order-description .label {
+  color: var(--light-text-color);
+  line-height: 26px;
+}
 .order-description .text {
   font-size: 14px;
+  color: var(--text-color);
 }
 
 .button-box {

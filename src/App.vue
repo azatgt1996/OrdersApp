@@ -1,7 +1,7 @@
 <template>
   <AppMenu />
-  <OrderViewer v-if="orderStore.mode === 'view'" />
-  <OrderEditor v-else />
+  <OrderEditor v-if="orderStore.isEditing" />
+  <OrderViewer v-else />
 </template>
 
 <script setup lang="ts">
