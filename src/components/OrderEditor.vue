@@ -24,7 +24,7 @@
       :hint="`${order.description.length} / 500`"
     />
     <div class="button-box">
-      <v-btn variant="flat"> Отменить </v-btn>
+      <v-btn variant="flat" @click="resetOrder"> Отменить </v-btn>
       <v-btn variant="flat" color="primary" type="submit"> Сохранить </v-btn>
     </div>
   </v-form>
@@ -34,15 +34,28 @@
 import calendarIcon from '@/assets/icons/calendar.svg?raw'
 import { paymentMethodList, peculiarityList } from '@/constants/lists'
 import { dateValidator, orderNameValidator, orderWeightValidator, requiredValidator } from '@/constants/validators'
+import { deepEqual } from '@/helpers'
 import { useOrderStore } from '@/stores/order'
 import { storeToRefs } from 'pinia'
+import { toRaw } from 'vue'
 
 const orderStore = useOrderStore()
 const { order } = storeToRefs(orderStore)
 
+const resetedOrder = structuredClone(toRaw(order.value))
+
 async function saveOrder(event: any) {
-  const results = await event
-  console.log(results)
+  const result = await event
+  if (result.valid) {
+    if (deepEqual(order.value, resetedOrder)) {
+      orderStore.isEditing = false
+      return
+    }
+    orderStore.saveOrder()
+  }
+}
+async function resetOrder() {
+  order.value = structuredClone(resetedOrder)
 }
 </script>
 

@@ -1,14 +1,11 @@
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
 import { paymentMethodList, peculiarityList } from '@/constants/lists'
+import { getFromLocalStorage, saveToLocalStorage } from '@/helpers'
 
 type PaymentMethod = (typeof paymentMethodList)[number]
 type Peculiarity = (typeof peculiarityList)[number]
-
-const getFromLocalStorage = (key: string, defaultValue: any) => {
-  return JSON.parse(localStorage.getItem(key) || 'null') || defaultValue
-}
 
 interface IOrder {
   name: string
@@ -26,15 +23,26 @@ const defaultOrder: IOrder = {
   weight: null,
   city: '',
   deadline: null,
-  paymentMethod: null,
+  paymentMethod: 'Наличные',
   prepayment: false,
   peculiarities: [],
   description: '',
 }
 
 export const useOrderStore = defineStore('order', () => {
+  const snackbar = ref(false)
   const isEditing = ref(getFromLocalStorage('isEditing', true))
   const order: Ref<IOrder> = ref(getFromLocalStorage('order', defaultOrder))
 
-  return { isEditing, order }
+  watch(isEditing, (val) => {
+    saveToLocalStorage('isEditing', val)
+  })
+
+  function saveOrder() {
+    saveToLocalStorage('order', order.value)
+    isEditing.value = false
+    snackbar.value = true
+  }
+
+  return { snackbar, isEditing, order, saveOrder }
 })

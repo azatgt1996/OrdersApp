@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="button-box">
-      <v-btn variant="flat" color="primary"> Редактировать </v-btn>
+      <v-btn variant="flat" color="primary" @click="editOrder"> Редактировать </v-btn>
     </div>
   </section>
 </template>
@@ -40,6 +40,10 @@ const orderInfo = computed(() => {
     { label: 'Вес', value: `${order.value.weight} кг` },
   ]
 })
+
+function editOrder() {
+  orderStore.isEditing = true
+}
 </script>
 
 <style scoped>
@@ -87,6 +91,7 @@ const orderInfo = computed(() => {
 
 .order-description {
   margin-top: 8px;
+  white-space: break-spaces;
 }
 .order-description .label {
   color: var(--light-text-color);
