@@ -35,3 +35,5 @@ package-lock.json
 
 # Vitest
 __screenshots__/
+
+.vercel

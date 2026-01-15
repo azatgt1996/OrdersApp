@@ -1,11 +1,19 @@
 <template>
-  <v-snackbar v-model="model" :timeout="2000" color="#00A055">
+  <v-snackbar
+    v-model="model"
+    :timeout="2000"
+    color="#00A055"
+  >
     <div class="snackbar-box">
       <div v-html="checkIcon" />
       <span>Заказ успешно сохранён</span>
     </div>
     <template v-slot:actions>
-      <div class="snackbar-closer" v-html="closeIcon" @click="model = false" />
+      <div
+        class="snackbar-closer"
+        v-html="closeIcon"
+        @click="model = false"
+      />
     </template>
   </v-snackbar>
 </template>

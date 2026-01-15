@@ -1,21 +1,60 @@
 <template>
   <header>Разместить заказа</header>
-  <v-form class="main-form" @submit.prevent="saveOrder">
+  <v-form
+    class="main-form"
+    @submit.prevent="saveOrder"
+  >
     <div class="flex-box">
-      <v-text-field v-model="order.name" label="Название заказа*" variant="outlined" :rules="[requiredValidator, orderNameValidator]" />
-      <v-text-field v-model="order.weight" label="Вес" variant="outlined" type="number" :rules="[orderWeightValidator]" />
+      <v-text-field
+        v-model="order.name"
+        label="Название заказа*"
+        variant="outlined"
+        :rules="[requiredValidator, orderNameValidator]"
+      />
+      <v-text-field
+        v-model="order.weight"
+        label="Вес"
+        variant="outlined"
+        type="number"
+        :rules="[orderWeightValidator]"
+      />
     </div>
     <div class="flex-box">
-      <v-text-field v-model="order.city" label="Город*" variant="outlined" :rules="[requiredValidator]" />
-      <v-text-field v-model="order.deadline" label="Дедлайн*" variant="outlined" :rules="[requiredValidator, dateValidator]">
+      <v-text-field
+        v-model="order.city"
+        label="Город*"
+        variant="outlined"
+        :rules="[requiredValidator]"
+      />
+      <v-text-field
+        v-model="order.deadline"
+        label="Дедлайн*"
+        variant="outlined"
+        :rules="[requiredValidator, dateValidator]"
+      >
         <template #append-inner>
           <div v-html="calendarIcon" />
         </template>
       </v-text-field>
     </div>
-    <v-select v-model="order.paymentMethod" label="Вид оплаты" :items="paymentMethodList" variant="outlined" />
-    <v-checkbox v-model="order.prepayment" class="prepayment" label="Аванс" />
-    <v-select v-model="order.peculiarities" label="Особенности" :items="peculiarityList" multiple variant="outlined" />
+    <v-select
+      v-model="order.paymentMethod"
+      label="Вид оплаты"
+      :items="paymentMethodList"
+      variant="outlined"
+    />
+    <v-checkbox
+      v-model="order.prepayment"
+      class="prepayment"
+      label="Аванс"
+    />
+    <v-select
+      v-model="order.peculiarities"
+      label="Особенности"
+      :items="peculiarityList"
+      multiple
+      variant="outlined"
+    />
     <v-textarea
       label="Описание заказа"
       v-model="order.description"
@@ -24,8 +63,19 @@
       :hint="`${order.description.length} / 500`"
     />
     <div class="button-box">
-      <v-btn variant="flat" @click="resetOrder"> Отменить </v-btn>
-      <v-btn variant="flat" color="primary" type="submit"> Сохранить </v-btn>
+      <v-btn
+        variant="flat"
+        @click="resetOrder"
+      >
+        Отменить
+      </v-btn>
+      <v-btn
+        variant="flat"
+        color="primary"
+        type="submit"
+      >
+        Сохранить
+      </v-btn>
     </div>
   </v-form>
 </template>

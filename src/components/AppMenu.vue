@@ -1,9 +1,18 @@
 <template>
   <div class="menu">
-    <div class="menu-item" v-html="chatIcon" />
-    <div class="menu-item" v-html="bellIcon" />
+    <div
+      class="menu-item"
+      v-html="chatIcon"
+    />
+    <div
+      class="menu-item"
+      v-html="bellIcon"
+    />
     <div class="person-block">
-      <div class="menu-item" v-html="personIcon" />
+      <div
+        class="menu-item"
+        v-html="personIcon"
+      />
       <div class="person-info">
         <div class="person-fullname">Иванов Иван</div>
         <div class="person-position">Сотрудник</div>

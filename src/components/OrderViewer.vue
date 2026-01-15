@@ -3,23 +3,42 @@
   <section class="main-form">
     <div class="order-name">{{ order.name }}</div>
     <div class="order-tags">
-      <div v-if="order.prepayment" class="tag prepayment">Аванс</div>
-      <div v-for="(el, index) in order.peculiarities" :key="index" class="tag">{{ el }}</div>
+      <div
+        v-if="order.prepayment"
+        class="tag prepayment"
+      >
+        Аванс
+      </div>
+      <div
+        v-for="(el, index) in order.peculiarities"
+        :key="index"
+        class="tag"
+      >
+        {{ el }}
+      </div>
     </div>
     <div class="order-info">
-      <div class="info-item" v-for="(item, index) in orderInfo" :key="index">
+      <div
+        class="info-item"
+        v-for="(item, index) in orderInfo"
+        :key="index"
+      >
         <div class="label">{{ item.label }}</div>
         <div class="value">{{ item.value }}</div>
       </div>
     </div>
     <div class="order-description">
       <div class="label">Описание заказа</div>
-      <div class="text">
-        {{ order.description }}
-      </div>
+      <div class="text">{{ order.description }}</div>
     </div>
     <div class="button-box">
-      <v-btn variant="flat" color="primary" @click="editOrder"> Редактировать </v-btn>
+      <v-btn
+        variant="flat"
+        color="primary"
+        @click="editOrder"
+      >
+        Редактировать
+      </v-btn>
     </div>
   </section>
 </template>
